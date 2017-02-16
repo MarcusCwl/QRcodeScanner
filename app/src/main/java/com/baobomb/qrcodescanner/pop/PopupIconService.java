@@ -46,7 +46,12 @@ public class PopupIconService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         // 显示
-        popupView.bind(this, statusBarHeight);
+        if (popupView != null) {
+            popupView.bind(this, statusBarHeight);
+        } else {
+            createView();
+            popupView.bind(this, statusBarHeight);
+        }
         return START_STICKY;
     }
 
