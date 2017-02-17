@@ -202,6 +202,17 @@ public class BarCodeScanner extends Activity implements QRCodeView.Delegate {
 
     public void runService() {
         Intent intent = new Intent(this, PopupIconService.class);
-        startService(intent);
+        bindService(intent, new ServiceConnection() {
+            @Override
+            public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+                ((PopupIconService.RecorderServiceBinder)
+                        iBinder).getService().start();
+            }
+
+            @Override
+            public void onServiceDisconnected(ComponentName componentName) {
+
+            }
+        }, BIND_AUTO_CREATE);
     }
 }
